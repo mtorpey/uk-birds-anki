@@ -2,7 +2,7 @@ import json
 import os
 import re
 import requests
-import urllib.request 
+import urllib.request
 from bs4 import BeautifulSoup
 from pypersist import persist
 
@@ -229,7 +229,7 @@ def get_abundance_from_population(population):
 
     return value
 
-    
+
 def get_abundance_from_string(s):
     """Process a string describing a population into an estimate for the total number of birds."""
     # Remove commas from numbers
@@ -387,6 +387,12 @@ def write_anki_csv(data, filename):
                 str(species["abundance"]),
                 species["rarity"],
             )
+            for i in range(len(fields)):
+                if ";" in fields[i]:
+                    fields = list(fields)
+                    fields[i] = '"' + fields[i] + '"'
+                    fields = tuple(fields)
+
             f.write(";".join(fields) + "\n")
         print("Wrote out Anki data to", filename)
 
